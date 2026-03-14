@@ -10,27 +10,27 @@
 :root {
   /* ================================================
      PALETTE — 5 COULEURS
-     1. #FFFFFF  Blanc     — cartes, modals, fond blanc
-     2. #FDF5E8  Crème     — fond de page
-     3. #B5621E  Cannelle  — couleur primaire / marque
-     4. #D4A017  Doré      — accent / mise en valeur
-     5. #2C1A0E  Chocolat  — texte / éléments sombres
+     1. #F8B1C9  rose clair   — cartes, modals, fond blanc
+     2. #F49FBC  rose      — fond de page
+     3. #C42847  rose foncé  — couleur primaire / marque
+     4. #73282A  Marron      — accent / mise en valeur
+     5. #210918  Chocolat  — texte / éléments sombres
      ================================================ */
 
   /* Nuances dérivées (tints & shades des 5 couleurs) */
-  --primary: #b5621e; /* cannelle */
-  --primary-dark: #8e4a14; /* cannelle foncé */
-  --primary-light: #fef3e8; /* cannelle très clair */
-  --accent: #d4a017; /* doré */
-  --accent-light: #fdf9e3; /* doré très clair */
-  --accent-deep: #9a7410; /* doré foncé */
+  --primary: #c42847; /* rose foncé */
+  --primary-dark: #ac1037; /* rose foncé foncé */
+  --primary-light: #f9e3e9; /* rose foncé très clair */
+  --accent: #73282a; /* marron */
+  --accent-light: #ecd3d3; /* marron très clair */
+  --accent-deep: #511213; /* marron foncé */
   --danger: #8e2a0a; /* cannelle très foncé → erreur */
   --danger-light: #fae8e3; /* fond danger clair */
-  --text: #2c1a0e; /* chocolat */
+  --text: #210918; /* chocolat */
   --text-muted: #7a6452; /* chocolat mi-ton */
   --text-light: #a89080; /* chocolat clair */
-  --bg: #fdf5e8; /* crème */
-  --bg-card: #ffffff; /* blanc */
+  --bg: #f9c2d4; /* rose */
+  --bg-card: #f8b1c9; /* crème */
   --border: #e8d8c4; /* crème warm */
   --border-light: #f5ede0; /* crème très clair */
   --shadow-sm: 0 1px 3px rgba(44, 26, 14, 0.07);
@@ -479,39 +479,6 @@ textarea {
   }
 }
 
-.hero-card {
-  position: relative;
-  z-index: 2;
-  background: white;
-  border-radius: var(--radius-lg);
-  padding: 32px;
-  box-shadow: var(--shadow-lg);
-  text-align: center;
-  border: 1px solid var(--border);
-}
-.hero-card-img {
-  font-size: 72px;
-  line-height: 1;
-}
-.hero-card-tag {
-  display: inline-block;
-  background: var(--accent-light);
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 100px;
-  margin-top: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.hero-card-info p {
-  font-weight: 600;
-  font-size: 14px;
-  margin: 4px 0 0;
-  color: var(--text);
-}
-
 /* ===== FEATURES ===== */
 .features {
   padding: 48px 0;
@@ -756,7 +723,7 @@ textarea {
   gap: 20px;
 }
 .category-card {
-  background: white;
+  background: #f8b1c9;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 32px 24px;
@@ -785,7 +752,7 @@ textarea {
 
 /* ===== PROMO BANNER ===== */
 .promo-banner {
-  background: linear-gradient(135deg, var(--primary), #8e4a14);
+  background: linear-gradient(135deg, var(--primary), #f8b1c9);
   padding: 48px 0;
   color: white;
 }
