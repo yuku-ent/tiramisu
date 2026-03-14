@@ -1,0 +1,1415 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>La Bonne Mie - Boulangerie Artisanale</title>
+    <meta
+      name="description"
+      content="La Bonne Mie - Boulangerie artisanale. Pains, viennoiseries, pâtisseries et spécialités maison, fabriqués chaque matin avec passion."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="shop.css" />
+  </head>
+  <body>
+    <!-- HEADER / NAVBAR -->
+    <header class="header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="#" class="logo" onclick="navigate('home')">
+            <span class="logo-icon">🥖</span>
+            <span class="logo-text">La Bonne Mie</span>
+          </a>
+          <nav class="nav-links">
+            <a
+              href="#"
+              onclick="navigate('home')"
+              data-page="home"
+              class="nav-link active"
+              >Accueil</a
+            >
+            <a
+              href="#"
+              onclick="navigate('products')"
+              data-page="products"
+              class="nav-link"
+              >Produits</a
+            >
+            <a
+              href="#"
+              onclick="navigate('about')"
+              data-page="about"
+              class="nav-link"
+              >À propos</a
+            >
+          </nav>
+          <div class="header-actions">
+            <button
+              class="search-btn"
+              onclick="toggleSearch()"
+              aria-label="Rechercher"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+            </button>
+            <div class="account-wrapper">
+              <button
+                class="account-btn"
+                id="account-header-btn"
+                onclick="handleAccountClick()"
+                aria-label="Mon compte"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span class="account-btn-label" id="account-btn-label"
+                  >Connexion</span
+                >
+              </button>
+              <div class="account-dropdown" id="account-dropdown">
+                <div class="account-dropdown-header">
+                  <span id="dropdown-user-name">Mon compte</span>
+                </div>
+                <a
+                  href="#"
+                  onclick="
+                    navigate('account');
+                    closeAccountDropdown();
+                  "
+                  >👤 Mon profil</a
+                >
+                <a
+                  href="#"
+                  onclick="
+                    navigate('account');
+                    closeAccountDropdown();
+                  "
+                  >📦 Mes commandes</a
+                >
+                <div class="dropdown-divider"></div>
+                <a href="#" onclick="customerLogout()" class="dropdown-logout"
+                  >🚪 Se déconnecter</a
+                >
+              </div>
+            </div>
+            <button
+              class="cart-btn"
+              onclick="navigate('cart')"
+              aria-label="Panier"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+              <span class="cart-count" id="cart-count">0</span>
+            </button>
+            <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Search bar -->
+      <div class="search-bar" id="search-bar">
+        <div class="container">
+          <div class="search-inner">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Rechercher un produit..."
+              oninput="handleSearch(this.value)"
+            />
+            <button onclick="toggleSearch()">✕</button>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile menu -->
+      <div class="mobile-menu" id="mobile-menu">
+        <a
+          href="#"
+          onclick="
+            navigate('home');
+            toggleMenu();
+          "
+          >Accueil</a
+        >
+        <a
+          href="#"
+          onclick="
+            navigate('products');
+            toggleMenu();
+          "
+          >Produits</a
+        >
+        <a
+          href="#"
+          onclick="
+            navigate('about');
+            toggleMenu();
+          "
+          >À propos</a
+        >
+        <a
+          href="#"
+          onclick="
+            navigate('cart');
+            toggleMenu();
+          "
+          >Panier (<span id="mobile-cart-count">0</span>)</a
+        >
+        <a
+          href="#"
+          id="mobile-account-link"
+          onclick="
+            handleAccountClick();
+            toggleMenu();
+          "
+          >👤 Connexion</a
+        >
+      </div>
+    </header>
+
+    <!-- PAGES CONTAINER -->
+    <main id="app">
+      <!-- PAGE: HOME -->
+      <div id="page-home" class="page active">
+        <!-- Hero -->
+        <section class="hero">
+          <div class="hero-content">
+            <span class="hero-badge">🌾 Fait maison chaque matin</span>
+            <h1>
+              L'art du pain <br /><span class="gradient-text"
+                >à votre porte</span
+              >
+            </h1>
+            <p>
+              Pains, viennoiseries et pâtisseries artisanales préparés chaque
+              jour avec des ingrédients soigneusement sélectionnés.
+            </p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" onclick="navigate('products')">
+                Commander maintenant
+              </button>
+              <button class="btn btn-outline" onclick="navigate('about')">
+                Notre histoire
+              </button>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-shapes">
+              <div class="shape shape-1"></div>
+              <div class="shape shape-2"></div>
+              <div class="shape shape-3"></div>
+            </div>
+            <div class="hero-card">
+              <div class="hero-card-img">🥐</div>
+              <div class="hero-card-info">
+                <span class="hero-card-tag">Frais du jour</span>
+                <p>Viennoiseries maison</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+          <div class="container">
+            <div class="features-grid">
+              <div class="feature-card">
+                <div class="feature-icon">🌅</div>
+                <h3>Frais chaque matin</h3>
+                <p>Cuisson dès 5h, prêt dès l'ouverture</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">🌾</div>
+                <h3>Ingrédients naturels</h3>
+                <p>Farines bio, sans additifs ni conservateurs</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">🚴</div>
+                <h3>Livraison locale</h3>
+                <p>Livraison à domicile dans votre quartier</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">🎁</div>
+                <h3>Commandes spéciales</h3>
+                <p>Gâteaux sur mesure pour vos événements</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="section">
+          <div class="container">
+            <div class="section-header">
+              <h2>Produits phares</h2>
+              <button class="btn btn-outline-sm" onclick="navigate('products')">
+                Voir tout →
+              </button>
+            </div>
+            <div class="products-grid" id="featured-products"></div>
+          </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="section categories-section">
+          <div class="container">
+            <h2 class="section-title">Nos spécialités</h2>
+            <div class="categories-grid">
+              <div class="category-card" onclick="filterByCategory('Pains')">
+                <div class="category-icon">🍞</div>
+                <h3>Pains</h3>
+                <span>6 variétés</span>
+              </div>
+              <div
+                class="category-card"
+                onclick="filterByCategory('Viennoiseries')"
+              >
+                <div class="category-icon">🥐</div>
+                <h3>Viennoiseries</h3>
+                <span>8 recettes</span>
+              </div>
+              <div
+                class="category-card"
+                onclick="filterByCategory('Pâtisseries')"
+              >
+                <div class="category-icon">🎂</div>
+                <h3>Pâtisseries</h3>
+                <span>10 créations</span>
+              </div>
+              <div class="category-card" onclick="filterByCategory('Salé')">
+                <div class="category-icon">🥪</div>
+                <h3>Salé</h3>
+                <span>6 gourmandises</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Promo Banner -->
+        <section class="promo-banner">
+          <div class="container">
+            <div class="promo-inner">
+              <div class="promo-text">
+                <span class="promo-tag">Offre du matin</span>
+                <h2>Petit-déjeuner complet à -15%</h2>
+                <p>Utilisez le code <strong>MATINEE</strong> dès 7h du matin</p>
+              </div>
+              <button
+                class="btn btn-light"
+                onclick="filterByCategory('Viennoiseries')"
+              >
+                Voir les viennoiseries
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- PAGE: PRODUCTS -->
+      <div id="page-products" class="page">
+        <div class="container">
+          <div class="page-header">
+            <h1>Tous nos produits</h1>
+            <p id="products-count">Chargement...</p>
+          </div>
+          <div class="products-toolbar">
+            <div class="filters">
+              <button
+                class="filter-btn active"
+                onclick="setFilter('Tous', this)"
+              >
+                Tous
+              </button>
+              <button class="filter-btn" onclick="setFilter('Pains', this)">
+                🍞 Pains
+              </button>
+              <button
+                class="filter-btn"
+                onclick="setFilter('Viennoiseries', this)"
+              >
+                🥐 Viennoiseries
+              </button>
+              <button
+                class="filter-btn"
+                onclick="setFilter('Pâtisseries', this)"
+              >
+                🎂 Pâtisseries
+              </button>
+              <button class="filter-btn" onclick="setFilter('Salé', this)">
+                🥪 Salé
+              </button>
+            </div>
+            <div class="sort-controls">
+              <select id="sort-select" onchange="handleSort(this.value)">
+                <option value="default">Trier par défaut</option>
+                <option value="price-asc">Prix croissant</option>
+                <option value="price-desc">Prix décroissant</option>
+                <option value="name-asc">Nom A-Z</option>
+                <option value="rating">Meilleures notes</option>
+              </select>
+            </div>
+          </div>
+          <div class="products-grid" id="all-products"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: PRODUCT DETAIL -->
+      <div id="page-product-detail" class="page">
+        <div class="container">
+          <button class="back-btn" onclick="goBack()">← Retour</button>
+          <div class="product-detail" id="product-detail-content"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: CART -->
+      <div id="page-cart" class="page">
+        <div class="container">
+          <h1>Mon panier</h1>
+          <div class="cart-layout">
+            <div class="cart-items" id="cart-items"></div>
+            <div class="cart-summary" id="cart-summary"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: CHECKOUT -->
+      <div id="page-checkout" class="page">
+        <div class="container">
+          <button class="back-btn" onclick="navigate('cart')">
+            ← Retour au panier
+          </button>
+          <h1>Finaliser la commande</h1>
+          <div class="checkout-layout">
+            <form
+              class="checkout-form"
+              id="checkout-form"
+              onsubmit="placeOrder(event)"
+            >
+              <div class="form-section">
+                <h2>Informations personnelles</h2>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Prénom *</label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      required
+                      placeholder="Jean"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Nom *</label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      required
+                      placeholder="Dupont"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Email *</label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="jean.dupont@example.com"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Téléphone *</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    required
+                    placeholder="+221 78 000 00 00"
+                  />
+                </div>
+              </div>
+              <div class="form-section">
+                <h2>Adresse de livraison</h2>
+                <div class="form-group">
+                  <label>Adresse *</label>
+                  <input
+                    type="text"
+                    name="address"
+                    required
+                    placeholder="Rue, quartier, numéro"
+                  />
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Ville *</label>
+                    <input
+                      type="text"
+                      name="city"
+                      required
+                      placeholder="Dakar"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Quartier / Zone</label>
+                    <input
+                      type="text"
+                      name="zip"
+                      placeholder="Plateau, Médina..."
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Pays</label>
+                  <select name="country">
+                    <option>Sénégal</option>
+                    <option>France</option>
+                    <option>Côte d'Ivoire</option>
+                    <option>Mali</option>
+                    <option>Guinée</option>
+                    <option>Cameroun</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h2>Mode de livraison</h2>
+                <div class="delivery-options" id="delivery-options">
+                  <label
+                    class="delivery-option active"
+                    onclick="selectDelivery('home', this)"
+                  >
+                    <input type="radio" name="delivery" value="home" checked />
+                    <div class="delivery-option-content">
+                      <span class="delivery-option-icon">🚴</span>
+                      <div>
+                        <strong>Livraison à domicile</strong>
+                        <span>Frais de livraison payés maintenant</span>
+                      </div>
+                    </div>
+                  </label>
+                  <label
+                    class="delivery-option"
+                    onclick="selectDelivery('pickup', this)"
+                  >
+                    <input type="radio" name="delivery" value="pickup" />
+                    <div class="delivery-option-content">
+                      <span class="delivery-option-icon">🤝</span>
+                      <div>
+                        <strong>Payer à la livraison</strong>
+                        <span>Frais de livraison réglés à la réception</span>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h2>Mode de paiement</h2>
+                <div class="payment-methods">
+                  <label
+                    class="payment-option active"
+                    onclick="selectPayment('wave')"
+                  >
+                    <input type="radio" name="payment" value="wave" checked />
+                    <span class="payment-logo wave-logo">Wave</span>
+                  </label>
+                  <label
+                    class="payment-option"
+                    onclick="selectPayment('orange')"
+                  >
+                    <input type="radio" name="payment" value="orange" />
+                    <span class="payment-logo orange-logo">Orange Money</span>
+                  </label>
+                </div>
+                <div id="wave-instructions" class="payment-instructions">
+                  <div class="payment-instr-header">
+                    <span class="payment-instr-logo wave-logo">Wave</span>
+                    <span>Envoyez le montant total au numéro :</span>
+                  </div>
+                  <div class="payment-number">+221 78 478 85 02</div>
+                  <p class="payment-note">
+                    📝 Indiquez comme référence votre
+                    <strong>prénom + numéro de commande</strong> reçu par email.
+                  </p>
+                  <p class="payment-note">
+                    ✅ La commande sera confirmée après réception du paiement.
+                  </p>
+                </div>
+                <div
+                  id="orange-instructions"
+                  class="payment-instructions"
+                  style="display: none"
+                >
+                  <div class="payment-instr-header">
+                    <span class="payment-instr-logo orange-logo"
+                      >Orange Money</span
+                    >
+                    <span>Envoyez le montant total au numéro :</span>
+                  </div>
+                  <div class="payment-number">+221 78 478 85 02</div>
+                  <p class="payment-note">
+                    📝 Indiquez comme référence votre
+                    <strong>prénom + numéro de commande</strong> reçu par email.
+                  </p>
+                  <p class="payment-note">
+                    ✅ La commande sera confirmée après réception du paiement.
+                  </p>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full">
+                Confirmer la commande
+              </button>
+            </form>
+            <div class="checkout-summary" id="checkout-summary"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: ORDER SUCCESS -->
+      <div id="page-order-success" class="page">
+        <div class="container">
+          <div class="success-page">
+            <div class="success-icon">✅</div>
+            <h1>Commande confirmée !</h1>
+            <p>
+              Merci pour votre achat. Vous recevrez un email de confirmation
+              sous peu.
+            </p>
+            <div class="success-order-id" id="success-order-id"></div>
+            <button class="btn btn-primary" onclick="navigate('home')">
+              Continuer mes achats
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: MON COMPTE -->
+      <div id="page-account" class="page">
+        <div class="container">
+          <div class="account-page" id="account-page-content"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: ABOUT -->
+      <div id="page-about" class="page">
+        <div class="container">
+          <div class="about-page">
+            <div class="about-hero">
+              <h1>À propos de La Bonne Mie</h1>
+              <p class="about-subtitle">
+                Boulangerie artisanale au cœur de votre quartier depuis 1998
+              </p>
+            </div>
+            <div class="about-grid">
+              <div class="about-text">
+                <h2>Notre histoire</h2>
+                <p>
+                  La Bonne Mie est née de la passion d'Henri Moreau, boulanger
+                  de troisième génération. Depuis 1998, nous pétrissons,
+                  façonnons et cuisons chaque jour nos pains et pâtisseries avec
+                  le même amour du métier.
+                </p>
+                <p>
+                  Aujourd'hui, notre boulangerie en ligne vous permet de
+                  commander vos gourmandises préférées et de vous les faire
+                  livrer fraîches chaque matin dans votre quartier.
+                </p>
+                <h2>Nos engagements</h2>
+                <ul class="values-list">
+                  <li>
+                    🌾 <strong>Farines bio locales</strong> — Sélectionnées chez
+                    des meuniers français
+                  </li>
+                  <li>
+                    ⏰ <strong>Cuit chaque matin</strong> — Rien n'est congelé,
+                    tout est frais
+                  </li>
+                  <li>
+                    🚫 <strong>Sans additifs</strong> — Recettes traditionnelles
+                    uniquement
+                  </li>
+                  <li>
+                    🌍 <strong>Circuit court</strong> — Producteurs locaux et
+                    responsables
+                  </li>
+                </ul>
+              </div>
+              <div class="about-stats">
+                <div class="stat-card">
+                  <span class="stat-number">25+</span>
+                  <span class="stat-label">Ans d'expérience</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-number">3 000+</span>
+                  <span class="stat-label">Clients fidèles</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-number">4.9★</span>
+                  <span class="stat-label">Note clients</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-number">6j/7</span>
+                  <span class="stat-label">Ouvert pour vous</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="#" class="logo" onclick="navigate('home')">
+              <span class="logo-icon">🥖</span>
+              <span class="logo-text">La Bonne Mie</span>
+            </a>
+            <p>
+              Boulangerie artisanale depuis 1998. Pains, viennoiseries et
+              pâtisseries livrés frais chaque matin.
+            </p>
+            <div class="social-links">
+              <a href="#" aria-label="Facebook">📘</a>
+              <a href="#" aria-label="Instagram">📷</a>
+              <a href="#" aria-label="Twitter">🐦</a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Nos produits</h4>
+            <ul>
+              <li>
+                <a href="#" onclick="navigate('products')">Toute la carte</a>
+              </li>
+              <li><a href="#" onclick="filterByCategory('Pains')">Pains</a></li>
+              <li>
+                <a href="#" onclick="filterByCategory('Viennoiseries')"
+                  >Viennoiseries</a
+                >
+              </li>
+              <li>
+                <a href="#" onclick="filterByCategory('Pâtisseries')"
+                  >Pâtisseries</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Informations</h4>
+            <ul>
+              <li><a href="#">Horaires</a></li>
+              <li><a href="#">Livraison</a></li>
+              <li><a href="#">Commandes spéciales</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2024 La Bonne Mie. Tous droits réservés.</p>
+          <div class="footer-links">
+            <a href="#">Mentions légales</a>
+            <a href="#">CGV</a>
+            <a href="#">Confidentialité</a>
+            <a
+              href="#"
+              onclick="openAdmin()"
+              style="color: rgba(255, 255, 255, 0.4)"
+              >⚙ Admin</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Toast notification -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- ==================== AUTH MODAL ==================== -->
+    <div class="auth-overlay" id="auth-overlay" onclick="closeAuthModal(event)">
+      <div class="auth-modal">
+        <button class="auth-close" onclick="closeAuthModal()">&times;</button>
+
+        <!-- Tabs -->
+        <div class="auth-tabs">
+          <button
+            class="auth-tab active"
+            id="tab-login"
+            onclick="switchAuthTab('login')"
+          >
+            Connexion
+          </button>
+          <button
+            class="auth-tab"
+            id="tab-register"
+            onclick="switchAuthTab('register')"
+          >
+            Créer un compte
+          </button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="auth-panel-login" class="auth-panel active">
+          <div class="auth-logo">🥖 <strong>La Bonne Mie</strong></div>
+          <p class="auth-subtitle">
+            Bienvenue ! Connectez-vous à votre compte.
+          </p>
+          <form onsubmit="customerLogin(event)" novalidate>
+            <div class="form-group">
+              <label>Adresse email</label>
+              <input
+                type="email"
+                id="login-email"
+                placeholder="votre@email.com"
+                required
+                autocomplete="email"
+              />
+            </div>
+            <div class="form-group">
+              <label>Mot de passe</label>
+              <div class="password-field">
+                <input
+                  type="password"
+                  id="login-password"
+                  placeholder="••••••••"
+                  required
+                  autocomplete="current-password"
+                />
+                <button
+                  type="button"
+                  onclick="toggleAuthPassword('login-password')"
+                  class="toggle-pass-btn"
+                >
+                  👁
+                </button>
+              </div>
+            </div>
+            <div
+              id="login-error"
+              class="auth-error"
+              style="display: none"
+            ></div>
+            <button type="submit" class="btn btn-primary btn-full">
+              Se connecter
+            </button>
+          </form>
+          <p class="auth-switch">
+            Pas encore de compte ?
+            <a href="#" onclick="switchAuthTab('register')">S'inscrire</a>
+          </p>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="auth-panel-register" class="auth-panel">
+          <div class="auth-logo">🥖 <strong>La Bonne Mie</strong></div>
+          <p class="auth-subtitle">
+            Créez votre compte et profitez de nos offres.
+          </p>
+          <form onsubmit="customerRegister(event)" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Prénom *</label>
+                <input
+                  type="text"
+                  id="register-firstname"
+                  placeholder="Jean"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Nom *</label>
+                <input
+                  type="text"
+                  id="register-lastname"
+                  placeholder="Dupont"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Adresse email *</label>
+              <input
+                type="email"
+                id="register-email"
+                placeholder="votre@email.com"
+                required
+                autocomplete="email"
+              />
+            </div>
+            <div class="form-group">
+              <label>Mot de passe *</label>
+              <div class="password-field">
+                <input
+                  type="password"
+                  id="register-password"
+                  placeholder="8 caractères minimum"
+                  required
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  onclick="toggleAuthPassword('register-password')"
+                  class="toggle-pass-btn"
+                >
+                  👁
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Confirmer le mot de passe *</label>
+              <input
+                type="password"
+                id="register-confirm"
+                placeholder="••••••••"
+                required
+                autocomplete="new-password"
+              />
+            </div>
+            <div
+              id="register-error"
+              class="auth-error"
+              style="display: none"
+            ></div>
+            <button type="submit" class="btn btn-primary btn-full">
+              Créer mon compte
+            </button>
+          </form>
+          <p class="auth-switch">
+            Déjà inscrit ?
+            <a href="#" onclick="switchAuthTab('login')">Se connecter</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ADMIN OVERLAY ==================== -->
+    <div id="admin-overlay" style="display: none">
+      <!-- ADMIN LOGIN -->
+      <div id="admin-login" class="admin-login-screen">
+        <div class="admin-login-card">
+          <div class="admin-login-logo">
+            <span class="logo-icon">🥖</span>
+            <span class="logo-text">La Bonne Mie Admin</span>
+          </div>
+          <h2>Connexion</h2>
+          <p class="admin-login-sub">Accès réservé aux administrateurs</p>
+          <form onsubmit="adminLogin(event)">
+            <div class="form-group">
+              <label>Identifiant</label>
+              <input
+                type="text"
+                id="admin-user-input"
+                placeholder="admin"
+                value="admin"
+              />
+            </div>
+            <div class="form-group">
+              <label>Mot de passe</label>
+              <div class="password-field">
+                <input
+                  type="password"
+                  id="admin-pass-input"
+                  placeholder="••••••••"
+                  value=""
+                />
+                <button
+                  type="button"
+                  onclick="togglePassword()"
+                  class="toggle-pass-btn"
+                >
+                  👁
+                </button>
+              </div>
+            </div>
+            <div
+              id="admin-login-error"
+              class="admin-error"
+              style="display: none"
+            >
+              Identifiants incorrects.
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+              Se connecter
+            </button>
+          </form>
+          <button class="admin-back-link" onclick="closeAdmin()">
+            ← Retour à la boutique
+          </button>
+        </div>
+      </div>
+
+      <!-- ADMIN DASHBOARD -->
+      <div id="admin-dashboard" style="display: none" class="admin-dashboard">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar" id="admin-sidebar">
+          <div class="admin-sidebar-header">
+            <span class="logo-icon">✦</span>
+            <span class="logo-text">Admin</span>
+            <button class="admin-sidebar-close" onclick="toggleAdminSidebar()">
+              ✕
+            </button>
+          </div>
+          <nav class="admin-nav">
+            <a
+              href="#"
+              class="admin-nav-item active"
+              onclick="switchAdminTab('dashboard', this)"
+            >
+              <span class="admin-nav-icon">📊</span> Tableau de bord
+            </a>
+            <a
+              href="#"
+              class="admin-nav-item"
+              onclick="switchAdminTab('products', this)"
+            >
+              <span class="admin-nav-icon">📦</span> Produits
+            </a>
+            <a
+              href="#"
+              class="admin-nav-item"
+              onclick="switchAdminTab('orders', this)"
+            >
+              <span class="admin-nav-icon">🛒</span> Commandes
+            </a>
+            <a
+              href="#"
+              class="admin-nav-item"
+              onclick="switchAdminTab('customers', this)"
+            >
+              <span class="admin-nav-icon">👥</span> Clients
+            </a>
+            <a
+              href="#"
+              class="admin-nav-item"
+              onclick="switchAdminTab('settings', this)"
+            >
+              <span class="admin-nav-icon">⚙️</span> Paramètres
+            </a>
+          </nav>
+          <div class="admin-sidebar-footer">
+            <button class="admin-logout-btn" onclick="adminLogout()">
+              🚪 Déconnexion
+            </button>
+          </div>
+        </aside>
+
+        <!-- Admin Main Content -->
+        <div class="admin-main">
+          <!-- Admin Top Bar -->
+          <div class="admin-topbar">
+            <button class="admin-menu-toggle" onclick="toggleAdminSidebar()">
+              ☰
+            </button>
+            <div class="admin-topbar-title" id="admin-topbar-title">
+              Tableau de bord
+            </div>
+            <div class="admin-topbar-right">
+              <span class="admin-badge-live">● En ligne</span>
+              <div class="admin-avatar" title="Admin">A</div>
+            </div>
+          </div>
+
+          <!-- TAB: DASHBOARD -->
+          <div id="admin-tab-dashboard" class="admin-tab active">
+            <div class="admin-content">
+              <h1 class="admin-page-title">Tableau de bord</h1>
+              <div class="admin-stats-grid">
+                <div class="admin-stat-card">
+                  <div
+                    class="admin-stat-icon"
+                    style="background: #eee9fd; color: #6c3de8"
+                  >
+                    💰
+                  </div>
+                  <div class="admin-stat-info">
+                    <span class="admin-stat-value" id="stat-revenue">€0</span>
+                    <span class="admin-stat-label">Chiffre d'affaires</span>
+                    <span class="admin-stat-trend up">↑ +12% ce mois</span>
+                  </div>
+                </div>
+                <div class="admin-stat-card">
+                  <div
+                    class="admin-stat-icon"
+                    style="background: #fff0f0; color: #ff6b6b"
+                  >
+                    🛒
+                  </div>
+                  <div class="admin-stat-info">
+                    <span class="admin-stat-value" id="stat-orders">0</span>
+                    <span class="admin-stat-label">Commandes</span>
+                    <span class="admin-stat-trend up">↑ +8 aujourd'hui</span>
+                  </div>
+                </div>
+                <div class="admin-stat-card">
+                  <div
+                    class="admin-stat-icon"
+                    style="background: #f0fff4; color: #10b981"
+                  >
+                    📦
+                  </div>
+                  <div class="admin-stat-info">
+                    <span class="admin-stat-value" id="stat-products">0</span>
+                    <span class="admin-stat-label">Produits actifs</span>
+                    <span class="admin-stat-trend">— Stable</span>
+                  </div>
+                </div>
+                <div class="admin-stat-card">
+                  <div
+                    class="admin-stat-icon"
+                    style="background: #fff7ed; color: #f59e0b"
+                  >
+                    👥
+                  </div>
+                  <div class="admin-stat-info">
+                    <span class="admin-stat-value">1 248</span>
+                    <span class="admin-stat-label">Clients</span>
+                    <span class="admin-stat-trend up">↑ +24 cette semaine</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="admin-grid-2">
+                <!-- Recent orders -->
+                <div class="admin-card">
+                  <div class="admin-card-header">
+                    <h3>Dernières commandes</h3>
+                    <button
+                      class="btn-link"
+                      onclick="switchAdminTab('orders', null)"
+                    >
+                      Voir tout →
+                    </button>
+                  </div>
+                  <table class="admin-table" id="recent-orders-table"></table>
+                </div>
+
+                <!-- Top products -->
+                <div class="admin-card">
+                  <div class="admin-card-header">
+                    <h3>Produits populaires</h3>
+                    <button
+                      class="btn-link"
+                      onclick="switchAdminTab('products', null)"
+                    >
+                      Voir tout →
+                    </button>
+                  </div>
+                  <div id="top-products-list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: PRODUCTS -->
+          <div id="admin-tab-products" class="admin-tab">
+            <div class="admin-content">
+              <div class="admin-page-header">
+                <h1 class="admin-page-title">Produits</h1>
+                <button class="btn btn-primary" onclick="openAddProduct()">
+                  + Ajouter un produit
+                </button>
+              </div>
+
+              <!-- Add/Edit Product Form -->
+              <div
+                class="admin-card"
+                id="product-form-card"
+                style="display: none"
+              >
+                <div class="admin-card-header">
+                  <h3 id="product-form-title">Nouveau produit</h3>
+                  <button class="btn-link" onclick="closeProductForm()">
+                    ✕ Fermer
+                  </button>
+                </div>
+                <form onsubmit="saveProduct(event)" class="admin-product-form">
+                  <input type="hidden" id="edit-product-id" />
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>Nom du produit *</label>
+                      <input
+                        type="text"
+                        id="fp-name"
+                        required
+                        placeholder="Ex: Veste en cuir"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label>Catégorie *</label>
+                      <select id="fp-category" required>
+                        <option value="">-- Choisir --</option>
+                        <option value="Pains">Pains</option>
+                        <option value="Viennoiseries">Viennoiseries</option>
+                        <option value="Pâtisseries">Pâtisseries</option>
+                        <option value="Salé">Salé</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>Prix (€) *</label>
+                      <input
+                        type="number"
+                        id="fp-price"
+                        required
+                        placeholder="49.99"
+                        min="0"
+                        step="0.01"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label>Ancien prix (€)</label>
+                      <input
+                        type="number"
+                        id="fp-old-price"
+                        placeholder="69.99"
+                        min="0"
+                        step="0.01"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label>Stock *</label>
+                      <input
+                        type="number"
+                        id="fp-stock"
+                        required
+                        placeholder="50"
+                        min="0"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>Photo du produit</label>
+                      <div
+                        class="photo-upload-area"
+                        id="photo-upload-area"
+                        onclick="document.getElementById('fp-image').click()"
+                      >
+                        <div
+                          class="photo-upload-placeholder"
+                          id="photo-placeholder"
+                        >
+                          <span>📷</span>
+                          <span>Cliquer pour ajouter une photo</span>
+                        </div>
+                        <img
+                          id="fp-image-preview"
+                          class="photo-preview"
+                          style="display: none"
+                          alt="Aperçu"
+                        />
+                      </div>
+                      <input
+                        type="file"
+                        id="fp-image"
+                        accept="image/*"
+                        style="display: none"
+                        onchange="handleProductImage(this)"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label>Emoji (si pas de photo)</label>
+                      <input
+                        type="text"
+                        id="fp-emoji"
+                        placeholder="📦"
+                        maxlength="4"
+                      />
+                      <div class="form-group" style="margin-top: 12px">
+                        <label>Badge</label>
+                        <select id="fp-badge">
+                          <option value="">Aucun</option>
+                          <option value="new">Nouveau</option>
+                          <option value="sale">Promo</option>
+                          <option value="bestseller">Best-seller</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Description *</label>
+                    <textarea
+                      id="fp-desc"
+                      rows="3"
+                      placeholder="Décrivez le produit, ses ingrédients, sa préparation..."
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                      💾 Enregistrer
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline"
+                      onclick="closeProductForm()"
+                    >
+                      Annuler
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Products Table -->
+              <div class="admin-card">
+                <div class="admin-card-header">
+                  <h3>Liste des produits</h3>
+                  <input
+                    type="text"
+                    class="admin-search-input"
+                    placeholder="Rechercher..."
+                    oninput="filterAdminProducts(this.value)"
+                  />
+                </div>
+                <div class="admin-table-wrapper">
+                  <table
+                    class="admin-table admin-table-full"
+                    id="admin-products-table"
+                  ></table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: ORDERS -->
+          <div id="admin-tab-orders" class="admin-tab">
+            <div class="admin-content">
+              <h1 class="admin-page-title">Commandes</h1>
+              <div class="admin-order-filters">
+                <button
+                  class="filter-btn active"
+                  onclick="filterAdminOrders('all', this)"
+                >
+                  Toutes
+                </button>
+                <button
+                  class="filter-btn"
+                  onclick="filterAdminOrders('pending', this)"
+                >
+                  En attente
+                </button>
+                <button
+                  class="filter-btn"
+                  onclick="filterAdminOrders('shipped', this)"
+                >
+                  Expédiées
+                </button>
+                <button
+                  class="filter-btn"
+                  onclick="filterAdminOrders('delivered', this)"
+                >
+                  Livrées
+                </button>
+                <button
+                  class="filter-btn"
+                  onclick="filterAdminOrders('cancelled', this)"
+                >
+                  Annulées
+                </button>
+              </div>
+              <div class="admin-card">
+                <div class="admin-table-wrapper">
+                  <table
+                    class="admin-table admin-table-full"
+                    id="admin-orders-table"
+                  ></table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: CUSTOMERS -->
+          <div id="admin-tab-customers" class="admin-tab">
+            <div class="admin-content">
+              <h1 class="admin-page-title">Clients</h1>
+              <div class="admin-card">
+                <div class="admin-table-wrapper">
+                  <table
+                    class="admin-table admin-table-full"
+                    id="admin-customers-table"
+                  ></table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: SETTINGS -->
+          <div id="admin-tab-settings" class="admin-tab">
+            <div class="admin-content">
+              <h1 class="admin-page-title">Paramètres</h1>
+              <div class="admin-card">
+                <div class="admin-card-header">
+                  <h3>Informations de la boutique</h3>
+                </div>
+                <form class="admin-product-form" onsubmit="saveSettings(event)">
+                  <div class="form-group">
+                    <label>Nom de la boutique</label>
+                    <input type="text" value="La Bonne Mie" />
+                  </div>
+                  <div class="form-group">
+                    <label>Email de contact</label>
+                    <input type="email" value="contact@shoplux.fr" />
+                  </div>
+                  <div class="form-group">
+                    <label>Seuil livraison gratuite (€)</label>
+                    <input type="number" value="50" min="0" />
+                  </div>
+                  <div class="form-group">
+                    <label>Frais de port (€)</label>
+                    <input type="number" value="4.99" min="0" step="0.01" />
+                  </div>
+                  <div class="form-group">
+                    <label>Mot de passe admin</label>
+                    <input type="password" placeholder="Nouveau mot de passe" />
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                      💾 Sauvegarder
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== FIN ADMIN ==================== -->
+
+    <!-- Admin trigger (footer link) -->
+    <script type="module" src="shop.js"></script>
+    <script type="module" src="admin.js"></script>
+  </body>
+</html>
