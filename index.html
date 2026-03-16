@@ -22,7 +22,6 @@
       <div class="container">
         <div class="header-inner">
           <a href="#" class="logo" onclick="navigate('home')">
-            <span class="logo-icon">🥖</span>
             <span class="logo-text">Gourmet city</span>
           </a>
           <nav class="nav-links">
@@ -315,7 +314,7 @@
           <div class="container">
             <div class="promo-inner">
               <div class="promo-text">
-                <span class="promo-tag">Offre du matin</span>
+                <span class="promo-tag">Offre du la semaine</span>
                 <h2>Petit-déjeuner complet à -15%</h2>
                 <p>Utilisez le code <strong>MATINEE</strong> dès 7h du matin</p>
               </div>
@@ -419,7 +418,7 @@
                       type="text"
                       name="firstName"
                       required
-                      placeholder="Jean"
+                      placeholder="prenom..."
                     />
                   </div>
                   <div class="form-group">
@@ -428,7 +427,7 @@
                       type="text"
                       name="lastName"
                       required
-                      placeholder="Dupont"
+                      placeholder="nom..."
                     />
                   </div>
                 </div>
@@ -438,7 +437,7 @@
                     type="email"
                     name="email"
                     required
-                    placeholder="jean.dupont@example.com"
+                    placeholder="bakari.ba@example.com"
                   />
                 </div>
                 <div class="form-group">
@@ -447,7 +446,7 @@
                     type="tel"
                     name="phone"
                     required
-                    placeholder="+221 78 000 00 00"
+                    placeholder="+221 78 123 45 67"
                   />
                 </div>
               </div>
@@ -485,11 +484,6 @@
                   <label>Pays</label>
                   <select name="country">
                     <option>Sénégal</option>
-                    <option>France</option>
-                    <option>Côte d'Ivoire</option>
-                    <option>Mali</option>
-                    <option>Guinée</option>
-                    <option>Cameroun</option>
                   </select>
                 </div>
               </div>
@@ -965,7 +959,6 @@
         <!-- Admin Sidebar -->
         <aside class="admin-sidebar" id="admin-sidebar">
           <div class="admin-sidebar-header">
-            <span class="logo-icon">✦</span>
             <span class="logo-text">Admin</span>
             <button class="admin-sidebar-close" onclick="toggleAdminSidebar()">
               ✕
@@ -1044,7 +1037,7 @@
                     💰
                   </div>
                   <div class="admin-stat-info">
-                    <span class="admin-stat-value" id="stat-revenue">€0</span>
+                    <span class="admin-stat-value" id="stat-revenue">F CFA 0</span>
                     <span class="admin-stat-label">Chiffre d'affaires</span>
                     <span class="admin-stat-trend up">↑ +12% ce mois</span>
                   </div>
@@ -1169,7 +1162,7 @@
                   </div>
                   <div class="form-row">
                     <div class="form-group">
-                      <label>Prix (€) *</label>
+                      <label>Prix (F CFA) *</label>
                       <input
                         type="number"
                         id="fp-price"
@@ -1180,7 +1173,7 @@
                       />
                     </div>
                     <div class="form-group">
-                      <label>Ancien prix (€)</label>
+                      <label>Ancien prix (F CFA)</label>
                       <input
                         type="number"
                         id="fp-old-price"
@@ -1374,11 +1367,11 @@
                     <input type="email" value="contact@shoplux.fr" />
                   </div>
                   <div class="form-group">
-                    <label>Seuil livraison gratuite (€)</label>
+                    <label>Seuil livraison gratuite (F CFA)</label>
                     <input type="number" value="50" min="0" />
                   </div>
                   <div class="form-group">
-                    <label>Frais de port (€)</label>
+                    <label>Frais de transport (F CFA)</label>
                     <input type="number" value="4.99" min="0" step="0.01" />
                   </div>
                   <div class="form-group">
